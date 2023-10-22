@@ -1,0 +1,76 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.header {
+  height: 100px;
+}
+
+.select {
+  max-width: 1200px;
+  margin: auto;
+  width: calc(100% - 120px);
+  background-color: rgb(77, 77, 77);
+}
+
+.do {
+  display: inline-block;
+  height: 70px;
+  line-height: 70px;
+  margin-left: 500px;
+}
+.si {
+  display: inline-block;
+  height: 70px;
+  line-height: 70px;
+}
+.dong {
+  display: inline-block;
+  height: 70px;
+  line-height: 70px;
+}
+
+select {
+  padding: 5px;
+  background-color: gray;
+  color: white;
+}
+
+.content {
+  margin: auto;
+  max-width: 1200px;
+}
+
+.content-left {
+  width: 25%;
+  float: left;
+}
+
+.info {
+  padding: 5px;
+  height: 500px;
+}
+
+.content-right {
+  width: 70%;
+  height: 70%;
+  float: right;
+}
+
+/* 지도 */
+.map {
+  /* border: 1px solid red; */
+  margin: 10px 5px;
+  padding: 5px;
+  /* max-width: 900px; */
+  height: 500px;
+}
+
+.menu-item-search {
+  display: inline-block;
+  height: 90px;
+  line-height: 90px;
+  margin-left: 20px;
+}

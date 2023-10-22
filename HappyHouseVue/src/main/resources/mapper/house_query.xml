@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.ssafy.happyHouse.dao.HouseDao">
+	
+	<select id="searchHouseInfo" resultType="com.ssafy.happyHouse.dto.HouseInfo">
+		select * from houseinfo where AptName = #{AptName}
+	</select>
+	
+	<select id="searchHouseInfoLoc" resultType="com.ssafy.happyHouse.dto.HouseInfo">
+		select * from houseinfo where AptName = #{dong}
+	</select>
+	
+	<select id="searchAllHouseInfo" resultType="com.ssafy.happyHouse.dto.HouseInfo">
+		select * from houseinfo
+	</select>
+	
+	<select id="searchRecentHouseDeal" resultType="com.ssafy.happyHouse.dto.HouseDeal">
+		select * from housedeal where AptName = #{AptName}
+	</select>
+	
+	<select id="searchRecentHouseDealLoc" resultType="com.ssafy.happyHouse.dto.HouseDeal">
+		select * from housedeal where dong = #{dong}
+	</select>
+	
+	<select id="searchAllHouseDeal" resultType="com.ssafy.happyHouse.dto.HouseDeal">
+		select * from housedeal
+	</select>
+	
+	<insert id="insertHouseInfo" parameterType="com.ssafy.happyHouse.dto.HouseInfo">
+		insert into houseinfo (  no, dong, AptName, code, buildYear, jibun, lat, lng, img )
+		             values (#{no}, #{dong}, #{AptName}, #{code}, #{buildYear}, #{jibun}, #{lat}, #{lng}, #{img})
+	</insert>
+	
+	<update id="updateHouseInfoLoc" parameterType="com.ssafy.happyHouse.dto.HouseInfo">
+		update houseinfo
+		   set dong = #{dong}
+		 where dong = #{dong}  
+	</update>
+	
+</mapper>

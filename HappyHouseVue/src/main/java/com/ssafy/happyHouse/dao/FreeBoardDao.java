@@ -1,0 +1,38 @@
+package com.ssafy.happyHouse.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import com.ssafy.happyHouse.dto.BoardParamDto;
+import com.ssafy.happyHouse.dto.BoardDto;
+
+@Mapper
+public interface FreeBoardDao {
+	// 전체 List 검색
+	public List<BoardDto> freeBoardList(BoardParamDto boardParam);
+	public int freeBoardTotalCnt();
+	
+	// 단어를 통한 List 검색
+	public List<BoardDto> freeBoardListSearchWord(BoardParamDto boardParam);
+	public int freeBoardTotalCntSearchWord(BoardParamDto boardParam);
+	
+	// 게시글 상세
+	public BoardDto boardDetail(BoardParamDto boardParam);
+	// 게시글 작성
+	public int freeBoardInsert(BoardDto boardDto);
+	// 게시글 수정
+	public int freeBoardModify(BoardDto boardDto);
+	// 게시글 삭제
+	public int freeBoardDelete(int boardId);
+	public int freeBoardDeleteByUser(String userId);
+	
+	// 조회수
+	public int getReadCount(BoardParamDto boardParam);
+	public int insertReadCount(@Param("boardId") int boardId, @Param("userId") String userId);
+	public int updateReadCount(int boardId);
+	public int deleteReadCount(int boardId);
+	public int deleteReadCountByUser(String userId);
+
+}

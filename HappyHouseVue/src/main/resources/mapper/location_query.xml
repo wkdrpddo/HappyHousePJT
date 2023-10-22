@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.ssafy.happyHouse.dao.LocationDao">
+	
+	<select id="searchSido" resultType="com.ssafy.happyHouse.dto.LocationDto">
+		select * from sido_code
+	</select>
+	
+	<select id="searchGugun" resultType="com.ssafy.happyHouse.dto.LocationDto">
+		select * from gugun_code where sido_code = #{code}
+	</select>
+	
+	<select id="searchDong" resultType="com.ssafy.happyHouse.dto.LocationDto">
+		select * from dong_code where gugun_code = #{code}
+	</select>
+	
+</mapper>

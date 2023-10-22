@@ -1,0 +1,45 @@
+package com.ssafy.happyHouse.config;
+
+import java.io.IOException;
+
+import org.apache.tomcat.util.file.ConfigurationSource.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.resource.PathResourceResolver;
+
+import com.ssafy.happyHouse.common.LoginInterceptor;
+
+//@Configuration
+public class WebMvcConfig implements WebMvcConfigurer {
+	
+	@Autowired
+	private LoginInterceptor interceptor;
+	
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(interceptor)
+		.addPathPatterns("/**")
+		.excludePathPatterns("/kakaologin/**", "/kakaoUsers/**", "/kakao/**", "/loginkakao/**")
+		.excludePathPatterns("/", "/index.html", "/freeboards/**", "/noticeboards/**", "favicon.ico", "/lib/**", "/scss/**")
+		.excludePathPatterns("/users/**", "/login/**", "/css/**", "/js/**", "/img/**", "/RecentDong/**", "/RecentApt/**","/search/**","/InfoApt/**","/loadDetailApt/**","/categorySearch/**");
+	}
+	
+	@Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**/*")
+                .addResourceLocations("classpath:/static/")
+                .resourceChain(true)
+                .addResolver(new PathResourceResolver() {
+//                    @Override
+                    protected Resource getResource(String resourcePath,Resource location) throws IOException {
+                        Resource requestedResource = location.createRelative(resourcePath);
+                        return requestedResource.exists() && requestedResource.isReadable() ? requestedResource
+                                : new ClassPathResource("/static/index.html");
+                    }
+                });
+    }
+
+}

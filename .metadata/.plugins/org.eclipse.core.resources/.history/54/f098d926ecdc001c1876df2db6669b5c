@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.ssafy.happyHouse.dao.FreeBoardDao">
+
+	<select id="freeBoardList" parameterType="map" resultType="com.ssafy.happyHouse.dto.BoardDto">
+		SELECT b.board_id, b.user_id, u.name, b.title, b.content, b.reg_dt, b.read_count
+		FROM board b, user u
+		WHERE b.user_id = u.id
+		AND b.board_code = '001'
+		ORDER BY b.board_id desc
+	</select>
+	
+	<select id="freeBoardTotal" resultType="int">
+		SELECT COUNT(*) FROM board
+		WHERE board_code = '001'
+	</select>
+	
+	<select id="freeBoardListSearchWord" parameterType="map" resultType="com.ssafy.happyHouse.dto.BoardDto">
+		SELECT b.board_id, b.user_id, u.name, b.title, b.content, b.reg_dt, b.read_count
+		FROM board b, user u
+		WHERE b.user_id = u.id
+		AND	b.title LIKE CONCAT('%', #{searchWord}, '%')
+		AND b.board_code = '001'
+		ORDER BY b.board_id desc
+	</select>
+	
+	<select id="freeBoardTotalCntSearchWord" parameterType="string" resultType="int">
+		SELECT COUNT(*) FROM board
+		WHERE title LIKE CONCAT('%', #{searchWord}, '%')
+		AND board_code = '001'
+	</select>
+	
+	<select id="boardDetail" parameterType="int" resultType="com.ssafy.happyHouse.dto.BoardDto">
+		SELECT b.board_id, b.user_id, u.name, b.title, b.content, b.reg_dt, b.read_count
+		FROM board b, user u
+		WHERE b.user_id = u.id
+		AND b.board_id = #{boardId}
+	</select>
+	
+	<insert id="freeBoardInsert" parameterType="com.ssafy.happyHouse.dto.BoardDto" useGeneratedKeys="true" keyProperty="boardId">
+		INSERT INTO board (user_id, title, content, reg_dt, board_code)
+		VALUES ( #{userId}, #{title}, #{content}, now(), '001' )
+	</insert>
+	
+	<update id="freeBoardModify" parameterType="com.ssafy.happyHouse.dto.BoardDto">
+		UPDATE board
+		SET title = #{title},
+			content = #{content}
+		WHERE board_id = #{boardId}
+	</update>
+	
+	<delete id="freeBoardDelete" parameterType="int">
+		DELETE FROM board WHERE board_id = #{boardId}
+	</delete>
+	
+	
+	<select id="getReadCount" parameterType="map" resultType="int">
+		SELECT count(*) FROM board_user_read WHERE board_id = #{boardId} and user_id = #{userId}
+	</select>
+	<insert id="insertReadCount" parameterType="map">
+		INSERT INTO board_user_read ( board_id, user_id )
+				VALUES ( #{boardId}, #{userId} )
+	</insert>
+	<update id="updateReadCount" parameterType="int">
+		UPDATE board set read_count = read_count+1
+		WHERE board_id = #{boardId}
+	</update>
+	<delete id="deleteReadCount" parameterType="int">
+		DELETE FROM board_user_read WHERE board_id = #{boardId}
+	</delete>
+	<delete id="deleteReadCountByUser" parameterType="int">
+		DELETE FROM board_user_read WHERE user_id = #{userId}
+	</delete>
+
+</mapper>

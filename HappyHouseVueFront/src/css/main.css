@@ -1,0 +1,191 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+/* select box 속성 설정 */
+.select {
+  background-color: rgb(77, 77, 77);
+}
+
+.do {
+  display: inline-block;
+  height: 70px;
+  line-height: 70px;
+  margin-left: 90px;
+}
+.si {
+  display: inline-block;
+  height: 70px;
+  line-height: 70px;
+}
+.dong {
+  display: inline-block;
+  height: 70px;
+  line-height: 70px;
+}
+
+.menu-item-search {
+  display: inline-block;
+  height: 90px;
+  line-height: 90px;
+  margin-left: 20px;
+}
+
+select {
+  padding: 5px;
+  background-color: gray;
+  color: white;
+}
+
+/* 중앙 content 영역의 속성 설정 */
+.content {
+  margin: 10px auto;
+  max-width: 1200px;
+}
+
+/* 중앙 top 영역의 속성 설정 */
+.content-top {
+  height: 35%;
+  /* background-image: url("https://modo-phinf.pstatic.net/20170813_18/1502610893941BUcDz_JPEG/mosaeq2qra.jpeg?type=w1100");
+    background-size: cover; */
+  position: relative;
+  text-align: center;
+}
+
+.content-top-img img {
+  /* vertical-align: middle; */
+  width: 100%;
+  height: 300px;
+  opacity: 0.6;
+}
+
+.happyhouse {
+  line-height: 60px;
+  position: absolute;
+  top: 90px;
+  text-align: center;
+  width: 100%;
+}
+.happyhouse h1 {
+  font-size: 45px;
+  letter-spacing: 3px;
+}
+.happyhouse hr {
+  width: 80%;
+  border: 0.5px solid rgb(255, 255, 255);
+  margin: auto;
+}
+
+/* 중앙 middle1 영역의 속성 설정 */
+.content-middle1 {
+  width: 100%;
+  height: 35%;
+}
+/* 지도 */
+.content-map {
+  /* border: 1px solid red; */
+  margin: 10px 5px;
+  padding: 5px;
+  /* max-width: 900px; */
+  height: 150px;
+}
+
+/* 중앙 middle2 영역의 속성 설정 */
+.content-middle2 {
+  display: flex;
+  padding-top: 30px;
+  height: 20%;
+  width: 98%;
+  margin: auto;
+}
+
+/* 지도 밑 section 3개 */
+/* .content-middle2 .ad {
+  display: inline-block;
+  width: 31%;
+  margin: auto;
+} */
+/* .content-middle2 .ad img {
+  width: 98%;
+} */
+
+.content-middle2 .article_tip {
+  margin-left: 2%;
+  margin-right: 2%;
+  width: 31%;
+}
+.content-middle2 .article_news {
+  width: 31%;
+}
+.content-middle2 h3 {
+  font-size: 25px;
+  font-weight: 400;
+  margin-bottom: 5px;
+}
+.content-middle2 li {
+  margin: 5px 0px;
+  line-height: 30px;
+  letter-spacing: -1px;
+  font-size: 18px;
+
+  height: 15%;
+}
+
+/* 중앙 footer 영역의 속성 설정 */
+.content-footer {
+  margin-top: 50px;
+  margin-bottom: 20px;
+  height: 10%;
+  display: flex;
+}
+.ssafy_img img {
+  width: 70px;
+}
+
+.content-footer-findus {
+  margin-left: 30px;
+  /* height: 150px; */
+}
+.content-footer-findus .findus {
+  font-size: 23px;
+  margin-bottom: 5px;
+  font-weight: 400;
+}
+.content-footer-findus hr {
+  width: 450px;
+  margin-bottom: 15px;
+}
+.content-footer-findus div {
+  line-height: 35px;
+}
+
+img.icon {
+  margin: 5px;
+  border: 1px solid #ccc;
+  float: left;
+  width: 180px;
+}
+
+/* footer */
+footer {
+  clear: both; /* float 효과를 정지시킨다 */
+  margin: 10px auto;
+  padding: 10px;
+  max-width: 1200px;
+  height: 50px;
+  background-color: rgb(231, 231, 231);
+}
+
+footer > div {
+  height: 70px;
+  line-height: 50px;
+  text-align: center;
+  color: rgb(194, 194, 194);
+}

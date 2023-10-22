@@ -1,0 +1,121 @@
+package com.ssafy.happyHouse.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ssafy.happyHouse.dao.FreeBoardDao;
+import com.ssafy.happyHouse.dao.NoticeBoardDao;
+import com.ssafy.happyHouse.dao.UserDao;
+import com.ssafy.happyHouse.dto.UserDto;
+import com.ssafy.happyHouse.dto.UserResultDto;
+
+@Service
+public class UserServiceImpl implements UserService {
+	
+	@Autowired
+	UserDao dao;
+	@Autowired
+	FreeBoardDao free;
+
+	@Override
+	public UserResultDto userDetail(String id) {
+		
+		UserResultDto userResultDto = new UserResultDto();
+		
+		try {
+			UserDto dto = dao.userDetail(id);
+			
+			if( dto.getId().equals(id) ) {
+				userResultDto.setDto(dto);
+				userResultDto.setResult(1);
+			} else {
+				userResultDto.setResult(0);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			userResultDto.setResult(-1);
+		}
+		
+		return userResultDto;
+	}
+
+	@Override
+	public UserResultDto register(UserDto dto) {
+		UserResultDto userResultDto = new UserResultDto();
+		
+		try {
+			int result = dao.register(dto);
+			userResultDto.setResult(result);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			userResultDto.setResult(-1);
+		}
+		
+		return userResultDto;
+	}
+
+	@Override
+	public UserResultDto modify(UserDto dto) {
+		UserResultDto userResultDto = new UserResultDto();
+		
+		try {
+			int result = dao.modify(dto);
+			
+			if(result == 1) {
+				userResultDto.setResult(1);
+			} else {
+				userResultDto.setResult(0);				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			userResultDto.setResult(-1);
+		}
+		
+		return userResultDto;
+	}
+
+	@Override
+	public UserResultDto delete(String id) {
+		UserResultDto userResultDto = new UserResultDto();
+		
+		try {
+			free.freeBoardDeleteByUser(id);
+			free.deleteReadCountByUser(id);
+			int result = dao.delete(id);
+
+			if(result == 1) {
+				userResultDto.setResult(1);
+			} else {
+				userResultDto.setResult(0);				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			userResultDto.setResult(-1);
+		}
+		
+		return userResultDto;
+	}
+
+	@Override
+	public UserResultDto kakaoRegist(UserDto dto) {
+		UserResultDto userResultDto = new UserResultDto();
+		
+		try {
+			int result = dao.kakaoRegist(dto);
+
+			if(result == 1) {
+				userResultDto.setResult(1);
+			} else {
+				userResultDto.setResult(0);				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			userResultDto.setResult(-1);
+		}
+		
+		return userResultDto;
+	}
+
+}

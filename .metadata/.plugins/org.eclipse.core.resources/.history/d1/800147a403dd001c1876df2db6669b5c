@@ -1,0 +1,105 @@
+package com.ssafy.happyHouse.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ssafy.happyHouse.dto.UserDto;
+import com.ssafy.happyHouse.dto.UserResultDto;
+import com.ssafy.happyHouse.service.KakaoLoginService;
+import com.ssafy.happyHouse.service.LoginService;
+
+@RestController
+@CrossOrigin(
+		// localhost:5500 과 127.0.0.1 구분
+		origins = "http://localhost:5500", // allowCredentials = "true" 일 경우, orogins="*" 는 X
+		allowCredentials = "true", 
+		allowedHeaders = "*", 
+		methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT,RequestMethod.HEAD,RequestMethod.OPTIONS}
+	)
+public class LoginController {
+	
+	@Autowired
+	LoginService service;
+	
+	@Autowired
+	KakaoLoginService kakao;
+	
+	@PostMapping(value="/login")
+	public ResponseEntity<UserResultDto> login(@RequestBody UserDto dto, HttpSession session) {
+		System.out.println(session.getAttribute("userDto"));
+		UserResultDto resultDto = service.login(dto.getId(), dto.getPassword());
+		System.out.println(resultDto);
+		
+		if(resultDto.getResult() == 1) {
+			UserDto userDto = resultDto.getDto();
+			session.setAttribute("userDto", userDto);
+			
+			System.out.println(session.getAttribute("userDto"));
+			
+			return new ResponseEntity<UserResultDto>(resultDto, HttpStatus.OK);
+		} else if( resultDto.getResult() == 0) {
+			return new ResponseEntity<UserResultDto>(resultDto, HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<UserResultDto>(resultDto, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	@GetMapping(value="/logout")
+	public void logout(HttpSession session) {
+		session.removeAttribute("userDto");
+		System.out.println("Logout : clear session");
+	}
+	
+	@GetMapping(value="/loginkakao")
+	public HashMap<String, String> kakaoLogin(@RequestParam String authorize_code) {
+		
+		System.out.println("Token Get Start\nCode : ");
+		System.out.println(authorize_code);
+		
+		String accessToken = kakao.getAccessToken(authorize_code);
+		
+		System.out.println("=== Get User Infomation ===");
+		
+		HashMap<String, String> userInfo = kakao.getUserInfo(accessToken);
+		
+		return userInfo;
+	}
+	
+	@PostMapping(value="/kakao")
+	public ResponseEntity<UserResultDto> kakaoLogin(@RequestBody UserDto dto, HttpSession session) {
+		System.out.println("====== kakao login start ======");
+		
+		System.out.println(dto);
+		
+		UserResultDto resultDto = service.kakaoLogin(dto.getId(), dto.getAddress());
+		
+		if(resultDto.getResult() == 1) {
+			UserDto userDto = resultDto.getDto();
+			session.setAttribute("userDto", userDto);
+			
+			System.out.println(session.getAttribute("userDto"));
+			
+			return new ResponseEntity<UserResultDto>(resultDto, HttpStatus.OK);
+		} else if( resultDto.getResult() == 0) {
+			return new ResponseEntity<UserResultDto>(resultDto, HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<UserResultDto>(resultDto, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+
+}
